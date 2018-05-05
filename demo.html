@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div class="loader" id="loader">
+    <div class="loader_box">
+        <div id="loader_num" style="font-size:15em;">100%</div>
+    </div>
+</div>
+
+<!--content-->
+<div id="imgs" style="display:none;">
+    <img data-loadsrc="http://i3.tietuku.com/6c65325bbf87eb84.jpg" alt="whu">
+    <img data-loadsrc="http://i3.tietuku.com/780c4c17e7bcc81d.jpg" alt="cherry">
+    <img data-loadsrc="http://i3.tietuku.com/a72ff6249b76a87e.jpg" alt="eastLake">
+    <img data-loadsrc="http://i11.tietuku.com/7b57a678c8999dba.jpg" alt="Chrysanthemum">
+    <img data-loadsrc="http://i3.tietuku.com/eba2fb18598fa5ca.jpg" alt="window">
+    <img data-loadsrc="http://i3.tietuku.com/8f4305f8f9538037.jpg" alt="maker">
+</div>
+</body>
+<script>
+    var num = 0;
+    var loader = document.getElementById("loader")
+    var content = document.getElementById("imgs");
+    var loader_num = document.getElementById("loader_num");
+
+    function imgLoad(img) {
+        var img_length = document.images.length;
+//“data-自定义属性”符合HTML5标准， 自带的dataset属性虽然与getAttribute性能没什么大区别，但方便简洁，可读性高，不过目前兼容性一般。
+        img.src = img.dataset.loadsrc || img.getAttribute("data-load-src");
+
+
+//将百分比数字放在setTimeout()中实时变换数字
+
+        setTimeout(function () {
+            loader_num.textContent = Math.ceil((num) / (img_length) * 100) + "%";
+            num++;
+            if (num < img_length) {
+                imgLoad(document.images[num]);
+            }
+            else {
+                loader.style.display = "none";
+                content.style.display = "block";
+            }
+        }, 1000) //设置百分比数字变换间隔
+
+
+    }
+
+    imgLoad(document.images[num]);
+</script>
+</html>
